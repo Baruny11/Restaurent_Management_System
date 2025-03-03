@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% extends "base.html"%}
+{%block content%}
+
+<style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: transparent;
+            margin: 0;
+            padding: 10px;
+            background-image: url('/media/table/OIP.jpeg');
+        }
+        h1 {
+            text-align: center;
+            color:white;
+            margin-top: 90px;
+        }
+        button {
+            margin-right: 4px;
+            margin: 1px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background-color: gradent(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+            color: white;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            position: relative;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 9px;
+            text-align: left;
+        }
+        th {
+            background-color: #792903;
+            color: rgb(241, 240, 245);
+            padding: 10px;
+        }
+        tr:nth-child(even) {
+            background-color:transparent;
+        }
+        tr:hover {
+            background-color:transparent;
+        }
+
+
+    </style>
+    <body>
+    <h1>Reservation</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Table Number</th>
+            <th>Number of Guests</th>
+            <th>Actions</th>
+        </tr>
+        {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.name }}</td>
+            <td>{{ reservation.email }}</td>
+            <td>{{ reservation.date }}</td>
+            <td>{{ reservation.time }}</td>
+            <td>{{ reservation.table_number }}</td>
+            <td>{{ reservation.number_of_guests }}</td>
+            <td>
+            <form method="POST" action="{% url 'cancel_booking' reservation.id %}">
+                {% csrf_token %}
+                <button class="btn btn-secondary">Cancel Booking</button>
+            </form>
+            <button class="btn btn-primary"> <a href="{% url 'new_booking'%}">New Booking</a></button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    </body>
+{%endblock%}
